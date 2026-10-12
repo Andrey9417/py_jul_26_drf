@@ -1,12 +1,22 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
+from django_filters import rest_framework as rest_filters
 
+from messenger.filters import MessageFilter
 from messenger.models import Message, Tag
 from messenger.serializers import MessageSerializer, TagSerializer, MessageListSerializer, MessageDetailSerializer
 
 
 class MessageViewSet(viewsets.ModelViewSet):
-    queryset = Message.objects.all()
+    queryset = Message.objects.select_related("user")
     serializer_class = MessageSerializer
+    filter_backends = [
+        filters.SearchFilter,
+        rest_filters.DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
+    search_fields = ["text", "user__username"]
+    filterset_class = MessageFilter
+    ordering_fields = ["created_at"]
 
     def get_serializer_class(self):
         match self.action:
