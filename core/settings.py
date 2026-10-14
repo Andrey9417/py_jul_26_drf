@@ -13,7 +13,7 @@ SECRET_KEY = "django-insecure-vb7$o#fg=5!s-$q2^bvvhlrvv1g2q-w!e75!a#f8*^k0w^-1xg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -136,3 +136,6 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "users.User"
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
